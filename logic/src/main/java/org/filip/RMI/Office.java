@@ -3,32 +3,48 @@ package org.filip.RMI;
 import interfaces.IHouse;
 import interfaces.IOffice;
 import interfaces.ITanker;
+import org.filip.helper.TankerDetails;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
+import java.util.*;
 
-public class Office extends UnicastRemoteObject implements IOffice
+public class Office  implements IOffice
 {
-    protected Office(int port) throws RemoteException
-    {
-        super(port);
-    }
+    private Map<TankerDetails, ITanker> tankers = new HashMap<>();
+    private int nextTankerId = 0;
+
+    public Office() throws RemoteException {}
 
     @Override
     public int register(ITanker r, String name) throws RemoteException
     {
-        return 0;
+        tankers.put(new TankerDetails(nextTankerId, false), r);
+        System.out.println("Office: Registered tanker " + name + " with ID " + nextTankerId);
+        return nextTankerId++;
     }
 
     @Override
     public int order(IHouse house, String name) throws RemoteException
     {
-        return 0;
+        if (tankers.isEmpty())
+        {
+            System.out.println("Office: No tankers available to handle the order.");
+            return 0; // Zamówienie odrzucone
+        }
+
+        ITanker tanker = tankers.values().iterator().next();
+        tanker.setJob(house);
+        System.out.println("Office: Assigned tanker to handle order from " + name);
+        return 1; // Zamówienie przyjęte
     }
 
     @Override
     public void setReadyToServe(int number) throws RemoteException
     {
+        var details = tankers.keySet().stream().filter(t -> t.getTankerNumber() == number).findFirst().get();
 
+        details.setReadyToServe(true);
+
+        System.out.println("Office: Tanker " + number + " reported ready to serve.");
     }
 }
