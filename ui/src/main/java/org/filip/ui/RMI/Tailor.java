@@ -1,4 +1,4 @@
-package org.filip.RMI;
+package org.filip.ui.RMI;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -38,7 +38,7 @@ public class Tailor
     {
         try
         {
-            Remote stub = UnicastRemoteObject.exportObject(service, 0);
+            Remote stub = UnicastRemoteObject.exportObject(service, REGISTRY_PORT);
             registry.rebind(serviceName, stub);
             localServices.put(serviceName, service);
             System.out.println("Registered service: " + serviceName);

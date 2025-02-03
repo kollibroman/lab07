@@ -1,7 +1,7 @@
-package org.filip.RMI;
+package org.filip.ui.RMI;
 
 import interfaces.IHouse;
-import interfaces.IOffice;
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.rmi.RemoteException;
@@ -11,7 +11,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.filip.ui.Tests.IOffice;
 
+@Getter
 public class House extends UnicastRemoteObject implements IHouse
 {
     private int capacity;
@@ -34,25 +36,24 @@ public class House extends UnicastRemoteObject implements IHouse
             if(!isPaused)
             {
                 currentVolume.addAndGet(10);
-
+                System.out.println("Poziom szamba: " + currentVolume.get());
                 if (currentVolume.get() >= capacity)
                 {
-                    requestEmptying();
                     pause();
-                }
+                    requestEmptying();
 
-                System.out.println("Poziom szamba: " + currentVolume.get());
+                }
             }
 
         }, 0, 3, TimeUnit.SECONDS);
     }
 
-    private  void pause()
+    public   void pause()
     {
         isPaused = true;
     }
 
-    private void resume()
+    public void resume()
     {
         isPaused = false;
     }
@@ -79,9 +80,12 @@ public class House extends UnicastRemoteObject implements IHouse
     @SneakyThrows
     private void requestEmptying()
     {
+        System.out.println("House: Requesting emptying of the sewage tank.");
         var r = LocateRegistry.getRegistry(2137);
+
         IOffice office = (IOffice) r.lookup("Office");
         int response = office.order(this, "House" + id);
+
         System.out.println("House: Requested emptying of the sewage tank. Response: " + response);
     }
 }

@@ -1,4 +1,4 @@
-package org.filip.RMI;
+package org.filip.ui.RMI;
 
 import interfaces.ISewagePlant;
 

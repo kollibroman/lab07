@@ -5,9 +5,12 @@ module org.filip.ui {
 
     requires org.controlsfx.controls;
     requires java.desktop;
-    requires logic;
     requires sewagelib;
+    requires java.management;
+    requires static lombok;
 
     opens org.filip.ui to javafx.fxml;
+    opens org.filip.ui.viewModel to javafx.base;
     exports org.filip.ui;
+    exports org.filip.ui.Tests to java.rmi;
 }

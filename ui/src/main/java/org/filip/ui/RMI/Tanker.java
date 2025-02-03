@@ -1,11 +1,12 @@
-package org.filip.RMI;
+package org.filip.ui.RMI;
 
 import interfaces.IHouse;
-import interfaces.IOffice;
 import interfaces.ISewagePlant;
 import interfaces.ITanker;
+import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import org.filip.ui.Tests.IOffice;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -13,11 +14,12 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Random;
 
+@Getter
 public class Tanker extends UnicastRemoteObject implements ITanker
 {
     private int maxCapacity;
     private int currentLoad = 0;
-    private static int id;
+    private int id;
 
     public Tanker(int maxCapacity) throws RemoteException
     {
