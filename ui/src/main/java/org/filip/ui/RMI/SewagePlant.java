@@ -1,6 +1,7 @@
 package org.filip.ui.RMI;
 
-import interfaces.ISewagePlant;
+import lombok.Getter;
+import org.filip.ui.Tests.ISewagePlant;
 
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 public class SewagePlant implements ISewagePlant
 {
+    @Getter
     private Map<Integer, Integer> tankerWaste = new HashMap<>();
 
     public SewagePlant() throws RemoteException {}

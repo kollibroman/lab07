@@ -45,8 +45,7 @@ public class OfficeUI extends Application
     public void start(Stage primaryStage)
     {
         try {
-            // Locate the Office through RMI (using Tailor)
-            var rmi = LocateRegistry.getRegistry(2137);
+            // Locate the Office through RMI (using Tailor);
             office = (IOffice) Tailor.lookup("localhost", "Office");
 
             // Setup UI

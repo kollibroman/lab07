@@ -1,12 +1,12 @@
 package org.filip.ui.RMI;
 
 import interfaces.IHouse;
-import interfaces.ISewagePlant;
 import interfaces.ITanker;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import org.filip.ui.Tests.IOffice;
+import org.filip.ui.Tests.ISewagePlant;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -39,11 +39,11 @@ public class Tanker extends UnicastRemoteObject implements ITanker
     @SneakyThrows
     public void setJob(IHouse house) throws RemoteException
     {
+        System.out.println("Tanker: Received job from the office.");
         int volume = house.getPumpOut(30);
 
-        Registry r = LocateRegistry.getRegistry(2137);
-        ISewagePlant sewagePlant = (ISewagePlant) r.lookup("SewagePlant");
-        IOffice office = (IOffice) r.lookup("Office");
+        ISewagePlant sewagePlant = Tailor.lookup("localhost", "SewagePlant");
+        IOffice office = Tailor.lookup("localhost", "Office");
         sewagePlant.setPumpIn(id, volume);
         System.out.println("sent to sewage plant");
 

@@ -1,10 +1,10 @@
 package org.filip.ui;
 
-import interfaces.ISewagePlant;
 import org.filip.ui.RMI.Office;
 import org.filip.ui.RMI.SewagePlant;
 import org.filip.ui.RMI.Tailor;
 import org.filip.ui.Tests.IOffice;
+import org.filip.ui.Tests.ISewagePlant;
 
 public class Server
 {

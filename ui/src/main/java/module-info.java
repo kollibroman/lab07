@@ -8,6 +8,7 @@ module org.filip.ui {
     requires sewagelib;
     requires java.management;
     requires static lombok;
+    requires java.rmi;
 
     opens org.filip.ui to javafx.fxml;
     opens org.filip.ui.viewModel to javafx.base;

@@ -43,12 +43,26 @@ public class Office  implements IOffice
             return 0; // Order rejected
         }
 
-        ITanker tanker = tankers.values().iterator().next();
+        System.out.println("Office: Checking for available tankers to handle the order.");
+        System.out.println("Office: Found " + tankers.size() + " tankers.");
 
-        tanker.setJob(house);
-        trackHouseOrder(name);
-        System.out.println("Office: Assigned tanker to handle order from " + name);
-        return 1; // Order accepted
+        var availableTanker = tankers.entrySet().stream()
+                .filter(entry -> entry.getKey().isReadyToServe())
+                .findFirst();
+
+        if (availableTanker.isPresent()) {
+            ITanker tanker = availableTanker.get().getValue();
+            tanker.setJob(house);
+            trackHouseOrder(name);
+            System.out.println("Office: Assigned tanker to handle order from " + name);
+            return 1; // Order accepted
+        }
+        else
+        {
+            System.out.println("Office: No ready tankers available to handle the order.");
+            trackHouseOrder(name); // Track the order even if it can't be processed immediately
+            return 0; // Order rejected
+        }
     }
 
     @Override
