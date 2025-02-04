@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import org.filip.ui.RMI.House;
 
 import java.rmi.RemoteException;
+import java.util.Random;
 
 import static javafx.application.Application.launch;
 
@@ -29,10 +30,11 @@ public class HouseUI extends Application
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)
+    {
+        var rand = new Random();
         try {
-            // Create House with 100 capacity and ID 1
-            house = new House(100, 1);
+            house = new House(100, rand.nextInt(30));
 
             // Setup UI
             VBox root = new VBox(10);
@@ -79,13 +81,18 @@ public class HouseUI extends Application
         }
     }
 
-    private void startUIUpdates() {
-        Thread updateThread = new Thread(() -> {
-            while (true) {
-                try {
+    private void startUIUpdates()
+    {
+        Thread updateThread = new Thread(() ->
+        {
+            while (true)
+            {
+                try
+                {
                     Thread.sleep(1000); // Update every second
 
-                    Platform.runLater(() -> {
+                    Platform.runLater(() ->
+                    {
                         int currentVolume = house.getCurrentVolume().get();
                         int capacity = house.getCapacity();
 
@@ -111,7 +118,8 @@ public class HouseUI extends Application
         updateThread.start();
     }
 
-    private void togglePause() {
+    private void togglePause()
+    {
         if (house.getIsPaused())
         {
             house.resume();

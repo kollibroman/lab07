@@ -19,7 +19,6 @@ import org.filip.ui.viewModel.HouseOrderViewModel;
 import org.filip.ui.viewModel.TankerViewModel;
 
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -46,7 +45,7 @@ public class OfficeUI extends Application
     {
         try {
             // Locate the Office through RMI (using Tailor);
-            office = (IOffice) Tailor.lookup("localhost", "Office");
+            office = Tailor.lookup("localhost", "Office");
 
             // Setup UI
             VBox root = new VBox(10);
